@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo ==============================================================================
-echo [FASM Modern SDK] Full System Self-Build & Verification
+echo [FASM Modern SDK] Full System Self-Build and Verification
 echo ==============================================================================
 
 set "ROOT_DIR=%~dp0"

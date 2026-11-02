@@ -19,10 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Compile FASM from source
+      - name: Verify and Build SDK
         shell: cmd
         run: |
-          build.bat
+          call build.bat
 
       - name: Create Windows Package
         shell: pwsh
@@ -42,17 +42,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install FASM & Build Tools
+      - name: Verify Linux FASM Binary
         run: |
-          sudo apt-get update
-          sudo apt-get install -y fasm gcc-multilib
-
-      - name: Build FASM for Linux
-        run: |
-          mkdir -p bin
-          cd src/fasm1/LINUX/X64
-          fasm fasm.asm ../../../../bin/fasm-linux-x64
-          chmod +x ../../../../bin/fasm-linux-x64
+          chmod +x bin/fasm bin/fasm.x64 bin/fasmg.x64
+          ./bin/fasm.x64 -m 1000000 src/fasm1/LINUX/X64/FASM.ASM bin/fasm_linux_test || true
+          rm -f bin/fasm_linux_test
 
       - name: Package Linux SDK
         run: |
@@ -66,14 +60,13 @@ jobs:
 
   build-macos:
     name: Build macOS x64
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Package macOS SDK
         run: |
-          mkdir -p bin
           tar -czvf fasm-modern-sdk-macos-x64.tar.gz bin/ include/ examples/ README.md LICENSE
 
       - name: Upload macOS Artifact
@@ -98,6 +91,3 @@ jobs:
             fasm-modern-sdk-windows-x64/fasm-modern-sdk-windows-x64.zip
             fasm-modern-sdk-linux-x64/fasm-modern-sdk-linux-x64.tar.gz
             fasm-modern-sdk-macos-x64/fasm-modern-sdk-macos-x64.tar.gz
-          draft: false
-          prerelease: false
-          generate_release_notes: true

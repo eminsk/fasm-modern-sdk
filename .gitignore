@@ -1,7 +1,5 @@
-*.exe
 *.obj
 *.o
-*.bin
 *.zip
 *.tar.gz
 *.pyc
@@ -9,3 +7,10 @@ __pycache__/
 .venv/
 .vs/
 .vscode/
+
+# Ensure all binaries in bin/ are tracked and shipped in the SDK
+!bin/fasm.exe
+!bin/fasm
+!bin/fasm.x64
+!bin/fasmg.exe
+!bin/fasmg.x64
