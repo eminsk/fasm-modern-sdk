@@ -1,0 +1,11 @@
+*.exe
+*.obj
+*.o
+*.bin
+*.zip
+*.tar.gz
+*.pyc
+__pycache__/
+.venv/
+.vs/
+.vscode/
